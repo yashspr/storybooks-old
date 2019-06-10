@@ -4,7 +4,7 @@
 	<form action="/stories/add" class="col s12" method="POST">
 		<div class="row">
 			<div class="input-field">
-				<input type="text" name="title">
+				<input type="text" name="title" pattern="[a-zA-Z0-9]{10,}" title="Title must have atleast 10 characters" required>
 				<label for="title">Title</label>
 			</div>
 		</div>
@@ -20,12 +20,10 @@
 			</div>
 		</div>
 
-		
-
 		<div class="row">
 			<p>
 				<label>
-					<input type="checkbox" class="filled-in" checked="checked" />
+					<input type="checkbox" class="filled-in" name="allowComments" checked="checked" />
 					<span>Allow Comments</span>
 				</label>
 			</p>
