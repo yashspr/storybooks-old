@@ -55,10 +55,12 @@ app.use(function (req, res, next) {
 // Loading routes
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
+const storiesRouter = require('./routes/stories');
 
 // Use routes
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/stories', storiesRouter);
 
 const port = process.env.PORT || 5000;
 
