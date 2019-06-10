@@ -15,7 +15,7 @@ const UserSchema = new Schema({
 	image: String
 });
 
-UserSchema.virtual('fullName').get(() => {
+UserSchema.virtual('fullName').get(function() {
 	return `${this.firstName} ${this.lastName}`;
 });
 

@@ -6,7 +6,18 @@ const { ensureAuthenticated, ensureGuest } = require('../helpers/auth');
 const Story = mongoose.model('story');
 
 router.get('/', (req, res) => {
-	res.render('stories/index');
+	Story.find({status: 'public'})
+		.populate('user')
+		.then(stories => {
+			res.render('stories/index', {
+				stories: stories
+			});
+		})
+		.catch(err => {
+			console.log(err);
+			req.flash('error_msg', 'Something went wrong');
+			res.redirect('/');
+		})
 });
 
 router.get('/add', ensureAuthenticated, (req, res) => {
@@ -26,7 +37,9 @@ router.post('/add', ensureAuthenticated, (req, res) => {
 	new Story(story)
 		.save()
 		.then(story => {
-			res.redirect('/stories/view/${story.id}');
+			req.flash('success_msg', 'Story added successfully');
+			res.redirect('/stories/');
+			//res.redirect('/stories/view/${story.id}');
 		})
 		.catch(err => {
 			console.log(err);

@@ -8,7 +8,7 @@ const flash = require('connect-flash');
 
 // Load the Schemas
 require('./models/User');
-require('../models/Story');
+require('./models/Story');
 
 require('./config/passport')(passport);
 
