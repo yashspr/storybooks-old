@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const keys = require('./config/keys');
 const session = require('express-session');
+const exphbs = require('express-handlebars');
+const flash = require('connect-flash');
 
 // Load the Schemas
 require('./models/User');
@@ -18,6 +20,13 @@ mongoose.connect(keys.mongoURI, {
 });
 
 var app = express();
+
+app.engine('handlebars', exphbs({
+	defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
+
+app.use(flash());
 
 app.use(express.json());
 app.use(express.static('assets'));
@@ -36,10 +45,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Custom middleware
-app.use((req, res, next) => {
+app.use(function (req, res, next) {
+	res.locals.success_msg = req.flash('success_msg');
+	res.locals.error_msg = req.flash('error_msg');
 	res.locals.user = req.user || null;
 	next();
-})
+});
 
 // Loading routes
 const indexRouter = require('./routes/index');
