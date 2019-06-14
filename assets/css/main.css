@@ -7,3 +7,19 @@ body {
 main {
 	flex: 1 0 auto;
 }
+
+footer {
+	margin-top: 20px;
+}
+
+.story-text {
+	height: 8em;
+}
+
+.dash-status {
+	text-transform: capitalize;
+}
+
+.delete-form {
+	display: inline;
+}

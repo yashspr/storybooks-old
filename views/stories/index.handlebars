@@ -10,10 +10,10 @@
 						<i style="font-size: 16px" class="fas fa-pencil-alt"></i>
 					</a>
 				</div>
-				
+
 				<div class="card-content center-align">
 					<h5>{{title}}</h5>
-					<p class="story-text">{{{body}}}</p>
+					<p class="story-text">{{stripTags (truncate body 150)}}</p>
 					<br>
 					<div class="chip">
 						<img src="{{user.image}}" alt="" srcset="">

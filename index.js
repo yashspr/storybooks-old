@@ -5,6 +5,7 @@ const keys = require('./config/keys');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const flash = require('connect-flash');
+const methodOverride = require('method-override');
 
 // Load the Schemas
 require('./models/User');
@@ -22,9 +23,19 @@ mongoose.connect(keys.mongoURI, {
 
 var app = express();
 
+// hbs helpers
+const { truncate, stripTags, formatDate, select } = require('./helpers/hbs');
+
 app.engine('handlebars', exphbs({
+	helpers: {
+		truncate,
+		stripTags,
+		formatDate,
+		select
+	},
 	defaultLayout: 'main'
 }));
+
 app.set('view engine', 'handlebars');
 
 app.use(flash());
@@ -44,6 +55,9 @@ app.use(session({
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Method Override middleware
+app.use(methodOverride('_method'));
 
 // Custom middleware
 app.use(function (req, res, next) {

@@ -22,6 +22,14 @@
 	<main>
 		<div class="container">
 
+			{{#if success_msg }}
+			<div class="card-panel teal">
+				<span class="white-text">
+					{{success_msg}}
+				</span>
+			</div>
+			{{/if}}
+
 			{{#if error_msg }}
 			<div class="card-panel red darken-1">
 				<span class="white-text">
