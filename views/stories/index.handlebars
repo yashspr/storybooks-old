@@ -17,7 +17,11 @@
 					<br>
 					<div class="chip">
 						<img src="{{user.image}}" alt="" srcset="">
-						<a href="/stories/user/{{user.id}}">{{user.fullName}}</a>
+						{{#if (checkStoryUserEqualsUser this.user.id ../user.id)}}
+							<a href="/stories/my">{{this.user.fullName}}</a>
+						{{else}}
+							<a href="/stories/user/{{story.user.id}}">{{this.user.fullName}}</a>
+						{{/if}}
 					</div>
 				</div>
 				<div class="card-action center-align">

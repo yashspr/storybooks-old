@@ -36,6 +36,13 @@ module.exports = {
 		} else {
 
 		}
+	},
+
+	checkStoryUserEqualsUser: function(storyUser, loggedInUser) {
+		if(storyUser && loggedInUser && (storyUser == loggedInUser)) {
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -39,7 +39,12 @@
 					<h5>{{this.commentBody}}</h5>
 					<div class="chip">
 						<img src="{{this.commentUser.image}}" alt="">
-						<a href="/stories/user/{{commentUser.id}}">{{commentUser.fullName}}</a>
+						{{!-- <a href="/stories/user/{{this.commentUser.id}}">{{commentUser.fullName}}</a> --}}
+						{{#if (checkStoryUserEqualsUser this.commentUser.id ../user.id)}}
+							<a href="/stories/my">{{commentUser.fullName}}</a>
+						{{else}}
+							<a href="/stories/user/{{this.commentUser.id}}">{{commentUser.fullName}}</a>
+						{{/if}}
 					</div>
 					<br>
 					<small>Posted: {{formatDate this.commentDate 'MMMM Do YYYY'}}</small>
@@ -58,7 +63,11 @@
 				<img class="circle responsive-img" src="{{story.user.image}}">
 			</div>
 			<div class="card-action">
-				<a href="/stories/user/{{story.user.id}}">More From {{story.user.firstName}}</a>
+				{{#if (checkStoryUserEqualsUser story.user.id user.id)}}
+					<a href="/stories/my">More From {{story.user.firstName}}</a>
+				{{else}}
+					<a href="/stories/user/{{story.user.id}}">More From {{story.user.firstName}}</a>
+				{{/if}}
 			</div>
 		</div>
 	</div>
