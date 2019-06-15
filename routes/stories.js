@@ -150,9 +150,18 @@ router.get('/show/:id', (req, res) => {
 		.populate('user')
 		.populate('comments.commentUser')
 		.then(story => {
-			res.render('stories/show', {
-				story: story
-			});
+
+			req.user = req.user || {};
+
+			if(story.user.id != req.user.id && story.status == 'private') {
+				req.flash('error_msg', 'Private story. Unauthorized');
+				res.redirect('/');
+			} else {
+				res.render('stories/show', {
+					story: story
+				});
+			}
+
 		});
 });
 
