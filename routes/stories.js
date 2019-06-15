@@ -8,6 +8,7 @@ const Story = mongoose.model('story');
 router.get('/', (req, res) => {
 	Story.find({ status: 'public' })
 		.populate('user')
+		.sort({ date: 'desc' })
 		.then(stories => {
 			res.render('stories/index', {
 				stories: stories
@@ -48,14 +49,22 @@ router.post('/', ensureAuthenticated, (req, res) => {
 		})
 });
 
-// Edit story
+// Edit story form
 router.get('/edit/:id', ensureAuthenticated, (req, res) => {
 	Story.findOne({ _id: req.params.id })
 		.then(story => {
-			res.render('stories/edit', {
-				story: story
-			});
-		});
+			if(story.user != req.user.id) {
+				res.redirect('/stories');
+			} else {
+				res.render('stories/edit', {
+					story: story
+				});
+			}
+		})
+		.catch(err => {
+			req.flash('error_msg', "Something went wrong");
+			res.redirect('/');
+		})
 });
 
 // Edit story with PUT request
