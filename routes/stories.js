@@ -99,10 +99,35 @@ router.delete('/:id', (req, res) => {
 router.get('/show/:id', (req, res) => {
 	Story.findOne({ _id: req.params.id })
 		.populate('user')
+		.populate('comments.commentUser')
 		.then(story => {
 			res.render('stories/show', {
 				story: story
 			});
+		});
+});
+
+// Add Comment
+router.post('/comment/:id', (req, res) => {
+	Story.findOne({ _id: req.params.id })
+		.then(story => {
+			const newComment = {
+				commentBody: req.body.commentBody,
+				commentUser: req.user.id
+			}
+
+			story.comments.unshift(newComment);
+
+			story.save()
+				.then(story => {
+					req.flash('success_msg', 'Comment added');
+					res.redirect(`/stories/show/${story.id}`);
+				})
+				.catch(err => {
+					console.log(err);
+					req.flash('error_msg', 'Unable to add comment');
+					res.redirect(`/stories/show/${story.id}`);
+				});
 		});
 });
 
