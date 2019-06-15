@@ -24,14 +24,15 @@ mongoose.connect(keys.mongoURI, {
 var app = express();
 
 // hbs helpers
-const { truncate, stripTags, formatDate, select } = require('./helpers/hbs');
+const { truncate, stripTags, formatDate, select, editIcon } = require('./helpers/hbs');
 
 app.engine('handlebars', exphbs({
 	helpers: {
 		truncate,
 		stripTags,
 		formatDate,
-		select
+		select,
+		editIcon
 	},
 	defaultLayout: 'main'
 }));
