@@ -1,5 +1,5 @@
 <div class="row">
-	<h1>Stories</h1>
+	<h1>Stories {{#if userName}} by {{userName}} {{/if}}</h1>
 
 	{{#each stories}}
 		<div class="col s12 m4">
@@ -17,7 +17,7 @@
 					<br>
 					<div class="chip">
 						<img src="{{user.image}}" alt="" srcset="">
-						{{user.fullName}}
+						<a href="/stories/user/{{user.id}}">{{user.fullName}}</a>
 					</div>
 				</div>
 				<div class="card-action center-align">

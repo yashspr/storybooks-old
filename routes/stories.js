@@ -21,6 +21,26 @@ router.get('/', (req, res) => {
 		})
 });
 
+// List stories from a user
+router.get('/user/:userId', (req, res) => {
+	Story.find({ user: req.params.userId, status: 'public' })
+		.populate('user')
+		.then(stories => {
+			let data = {
+				stories: stories
+			}
+			if(stories.length > 0) {
+				data.userName = stories[0].user.fullName; 
+			}
+			res.render('stories/index', data);
+		})
+		.catch(err => {
+			console.log(err);
+			req.flash('error_msg', 'Unable to find the user');
+			res.redirect('/');
+		});
+});
+
 // Add a story
 router.get('/add', ensureAuthenticated, (req, res) => {
 	res.render('stories/add');

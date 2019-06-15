@@ -39,7 +39,7 @@
 					<h5>{{this.commentBody}}</h5>
 					<div class="chip">
 						<img src="{{this.commentUser.image}}" alt="">
-						{{commentUser.fullName}}
+						<a href="/stories/user/{{commentUser.id}}">{{commentUser.fullName}}</a>
 					</div>
 					<br>
 					<small>Posted: {{formatDate this.commentDate 'MMMM Do YYYY'}}</small>
